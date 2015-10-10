@@ -81,6 +81,7 @@ public abstract class AbstractExecSqlScript implements ExecSqlScript {
         } finally {
             if (connection != null) {
                 try {
+                    connection.commit();
                     connection.close();
                 }
                 catch (SQLException e) {
@@ -137,7 +138,15 @@ public abstract class AbstractExecSqlScript implements ExecSqlScript {
     protected void executeScript(Connection connection, String scriptName, String cmd, File workingDirectory) {
         StringBuilder sqlLog = new StringBuilder("Exécution du script : " + scriptName.trim() + NEW_LINE);
 
-        String[] cmds = new String[]{"cmd.exe", "/c", cmd};
+        String[] cmds;
+        //TODO ARNO a proprifier avant commit
+        if (System.getProperty("os.name").indexOf("win") >= 0) {
+            logger.log("Switching on Windows environment");
+            cmds = new String[]{"cmd.exe", "/c", cmd};
+        }else{
+            logger.log("Switching on Unix environment");
+            cmds = new String[]{"/bin/bash", "-c", cmd};
+        }
 
         windowsExec.setProcessInput(getProcessInputMessage());
         int returnCode = windowsExec.exec(cmds, workingDirectory);

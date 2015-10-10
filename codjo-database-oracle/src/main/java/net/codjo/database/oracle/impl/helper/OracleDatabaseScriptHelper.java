@@ -96,6 +96,30 @@ public class OracleDatabaseScriptHelper extends AbstractDatabaseScriptHelper {
 
 
     private String dropObject(String type, String tableName) {
+/*
+        return new StringBuilder()
+              .append("declare")
+              .append(" l_Bidon  Varchar2(1);\n")
+              //.append(" pragma autonomous_transaction;\n")
+              .append("Begin \n")
+              .append("SELECT NULL \n")
+              .append("INTO l_Bidon \n")
+              .append("FROM Dual \n")
+              .append("WHERE EXISTS (SELECT NULL \n")
+              .append("FROM user_objects\n")
+              .append("WHERE object_name='").append(tableName).append("'\n")
+              .append("AND object_type = '").append(type.toUpperCase()).append("'\n")
+              .append("); \n")
+              .append("-- Si je suis la c'est que la contrainte existe\n")
+              .append("Execute Immediate 'drop ").append(type.toUpperCase()).append(" ").append(tableName).append("';\n")
+              .append("Exception\n")
+              .append("When NO_DATA_FOUND Then \n")
+              .append("NULL; -- c'est OK la contrainte n'existe pas\n")
+              .append("End;   \n")
+              .append("/")
+              .toString();
+              */
+
         return new StringBuilder()
               .append("execute util_pk.drop").append(type).append("('").append(tableName).append("');\n")
               .append("/\n")

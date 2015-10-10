@@ -17,12 +17,13 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Map;
+import net.codjo.database.common.util.ProxyDelegatorFactory;
 /**
  *
  */
 @SuppressWarnings({"OverlyComplexClass"})
-public class ResultSetDelegate implements ResultSet {
-    private ResultSet delegate;
+public class ResultSetDelegate {
+    private ResultSet delegate = ProxyDelegatorFactory.getProxy(this, ResultSet.class);
 
 
     protected void setDelegate(ResultSet delegate) {

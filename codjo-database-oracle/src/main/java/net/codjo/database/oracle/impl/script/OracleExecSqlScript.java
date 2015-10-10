@@ -30,8 +30,9 @@ public class OracleExecSqlScript extends AbstractExecSqlScript {
 
     @Override
     public String createSqlScriptCommand(String scriptFileName) {
-        String sqlString = "sqlplus " + getConnectionMetadata().getUser() + "/" + getConnectionMetadata().getPassword()
-                           + "@" + getConnectionMetadata().getBase() + " @\"" + scriptFileName + "\"";
+        //TODO ARNO verifier avant commit, avant on n'etait pas obligé de preciser le host
+        String sqlString = "sqlplus64 " + getConnectionMetadata().getUser() + "/" + getConnectionMetadata().getPassword()
+                           + "@" + getConnectionMetadata().getHostname()+":"+getConnectionMetadata().getPort()+"/"+getConnectionMetadata().getBase() + " @\"" + scriptFileName + "\"";
         getLogger().log(sqlString);
         return sqlString;
     }

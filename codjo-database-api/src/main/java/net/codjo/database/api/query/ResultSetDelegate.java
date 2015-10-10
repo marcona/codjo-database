@@ -19,8 +19,8 @@ import java.util.Calendar;
 import java.util.Map;
 
 @SuppressWarnings({"OverlyComplexClass"})
-public class ResultSetDelegate implements ResultSet {
-    private ResultSet delegate;
+public class ResultSetDelegate implements ResultSet{
+    private ResultSet delegate = ProxyDelegatorFactory.getProxy(this, ResultSet.class);
 
 
     protected void setDelegate(ResultSet delegate) {

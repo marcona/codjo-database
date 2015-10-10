@@ -3,7 +3,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class SelectResult extends ResultSetDelegate {
+public class SelectResult extends ResultSetDelegate implements ResultSet {
     private Statement statement;
     private int totalRowCount;
     private final Page page;
